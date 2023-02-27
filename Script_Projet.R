@@ -4,7 +4,7 @@ library(xts)
 library(imputeTS)
 
 #Import Data
-setwd("C:/Users/mathi/OneDrive/Documents/ENSTA PARIS/Cours_deuxième_année/STA202/Projet_STA202")
+setwd("F:/Documents/STA202-Project/")
 air_data<-read.table("AirQualityUCI.csv",header=T,sep=";")
 
 
