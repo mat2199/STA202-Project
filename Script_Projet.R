@@ -10,13 +10,13 @@ air_data<-read.table("AirQualityUCI.csv",header=T,sep=";")
 print(air_data)
 
 
-air_data<-air_data[2:9356,3:15]
+air_data<-air_data[2:9357,3:15]
 
 
 
 
 
-head(air_data)
+#head(air_data)
 
 
 #Create vector date 
@@ -29,16 +29,32 @@ Date_air<-seq.POSIXt(date1,date2, by = "1 hour")
 # Merge the two data frames together
 
 
-air_data_final<-cbind(Date,air_data)
+air_data_final<-cbind(Date_air,air_data)
 
-#air_data.xts<-xts(air_data,order.by=Date_air)
 
-plot(air_data$CO.GT)
+# Convert to xts format 
+#final_data<-xts(air_data_final[,-1],order.by=Date_air)
 
-test<-air_data$NMHC.GT.
 
-test<-replace(test,test<0,NA)
-print(test)
-test1<-na_mean(test)
+#We start by replace the negative values with NA for one of the columns
 
-plot(test1,type='l')
+test_col<-air_data_final$PT08.S1.CO.
+
+test_col<-replace(test_col,test_col<0,NA)
+
+# We count the number of missing values
+
+n_m_values<-sum(is.na(test_col))
+
+print(n_m_values)
+
+#We impute the missing values with the mean of the other values of the series 
+
+mean_imput<-na_mean(test_col)
+missing_values<-sum(is.na(mean_imput))
+print(missing_values)
+
+
+# We can now plot our fully processed values 
+
+plot(mean_imput,type="l")
