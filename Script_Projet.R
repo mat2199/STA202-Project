@@ -56,4 +56,49 @@ data_PT08.NO2<-xts(data_air$PT08.NO2,order.by=Date_air)
 data_PT08.O3<-xts(data_air$PT08.O3,order.by=Date_air)
 
 
+#### Descriptive analysis of our series
+
+# Global analysis of our series 
+
+analysis<-function(data)
+{
+  print(summary(data))
+  par(mfrow=c(1,2))
+  hist(data,plot=TRUE,col="red")
+  boxplot(data,plot=TRUE,col="blue")
+}
+
+# Function to show the mean of the data per month, day and hour
+
+mean_analysis<-function(data)
+{
+  # Mean emission per month
+  
+  month<-as.factor(.indexmon(data))
+  mean.month<-tapply(data,month,mean)
+  
+  # Mean emission per day
+  
+  day<-as.factor(.indexwday(data))
+  mean.day<-tapply(data,day,mean)
+  
+  # Mean emission per hour
+  
+  hour<-as.factor(.indexhour(data))
+  mean.hour<-tapply(data,hour,mean)
+  
+  # We plot the different means on a same figure
+  
+  par(mfrow=c(2,2))
+  
+  plot(mean.month,type='b',col="red",main="Monthly mean of emission",xlab="Month",ylab="Concentration of pollutant",pch=16)
+  plot(mean.day,type='b',col="#008B45",main="Daily mean of emission",xlab="Day",ylab="Concentration of pollutant",pch=16)
+  plot(mean.hour,type='b',col='blue',main="Hourly mean of emission",xlab="Hour",ylab="Concentration of pollutant",pch=16)
+  
+  
+}
+
+
+
+
 
