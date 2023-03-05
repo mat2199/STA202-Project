@@ -1,0 +1,11 @@
+## Modèle ARMA
+
+Date_air.test <- Date_air[n.train:n]
+forecast <- predict(model, newdata=X.test)
+
+plot(Date_air.train,  X, type='l')
+lines(Date_air, forecast$ts,  col='blue')
+
+
+## Lissage exponentiel
+
